@@ -1,0 +1,31 @@
+package com.ed.rules;
+
+import com.app.binding.CitizenInfo;
+import com.app.binding.PlanInfo;
+
+
+
+rule "Snap Plan Rules For AP"
+
+	when
+		indvInfo: CitizenInfo(isEmployed=='N')
+	then
+		PlanInfo planInfo = new PlanInfo();
+		planInfo.setPlanName("SNAP");
+		planInfo.setPlanStatus("AP");
+		planInfo.setPlanStartDate("04-10-2020");
+		planInfo.setPlanEndDate("04-12-2020");
+		planInfo.setBenefitAmt("$300.00");
+		indvInfo.setPlanInfo(planInfo);
+	end
+
+rule "Snap Plan Rules For DN"
+	when
+		indvInfo: CitizenInfo(isEmployed=='Y')
+	then
+		PlanInfo planInfo = new PlanInfo();
+		planInfo.setPlanName("SNAP");
+		planInfo.setPlanStatus("DN");
+		planInfo.setDenialReason("High Income");
+		indvInfo.setPlanInfo(planInfo);
+	end
